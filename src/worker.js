@@ -99,7 +99,7 @@ async function chat(b, req, env) {
       method: 'POST', signal: ctl.signal,
       headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
       body: JSON.stringify({
-        model: env.CHAT_MODEL || MODEL, max_tokens: 450, temperature: 0.4,
+        model: env.CHAT_MODEL || MODEL, max_tokens: 2000, output_config: { effort: 'low' },  // Haiku 5.5: no temperature; max_tokens includes thinking
         system: [{ type: 'text', text: SYSTEM + KNOWLEDGE, cache_control: { type: 'ephemeral' } }],
         messages: clean
       })
