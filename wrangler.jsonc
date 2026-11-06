@@ -1,10 +1,17 @@
 {
   // Sitio público de VDMX (vdmxbaja.com). Cloudflare lo publica desde GitHub.
+  // src/worker.js atiende /api/chat (asistente con IA) y /api/subscribe (lista de correo); todo lo demás son archivos de ./public.
+  // Secreto opcional: ANTHROPIC_API_KEY (Worker > Settings > Variables and Secrets). Sin él, el chat usa sus respuestas fijas.
   "name": "vdmxbaja",
+  "main": "src/worker.js",
   "compatibility_date": "2025-09-01",
-  "assets": { "directory": "./public", "not_found_handling": "single-page-application" },
+  "assets": { "directory": "./public", "binding": "ASSETS", "not_found_handling": "single-page-application", "run_worker_first": ["/api/*"] },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "vdmx-portal", "database_id": "e6519685-ed30-4a9b-a911-b7e4c7d44646" }
+  ],
   "routes": [
     { "pattern": "vdmxbaja.com", "custom_domain": true },
     { "pattern": "www.vdmxbaja.com", "custom_domain": true }
-  ]
+  ],
+  "observability": { "enabled": true }
 }
